@@ -1,0 +1,10 @@
+# Environments
+venv/
+__pycache__/
+
+# Secrets
+.env
+
+# Project Files
+*.pdf
+chroma_db/

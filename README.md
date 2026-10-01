@@ -4,7 +4,7 @@ A Retrieval-Augmented Generation (RAG) system built to ingest complex academic t
 
 ## Tech Stack
 * **Orchestration:** Python, LangChain (LCEL architecture)
-* **LLM:** Groq API (Llama-3.1-8b-instant)
+* **LLM:** Groq API (openai/gpt-oss-120b)
 * **Embeddings:** HuggingFace (`all-MiniLM-L6-v2`)
 * **Vector Database:** ChromaDB (Local)
 * **Document Processing:** PyPDFLoader, RecursiveCharacterTextSplitter

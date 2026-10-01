@@ -45,7 +45,11 @@ retriever = vectorstore.as_retriever()
 llm = ChatGroq(model="openai/gpt-oss-120b")
 prompt = ChatPromptTemplate.from_template("""
 You are an academic tutor. Answer the student's question based strictly on the provided textbook context.
-If the answer is not in the context, say "I cannot find this in the current chapter."
+
+CRITICAL INSTRUCTIONS FOR MATH NOTATION:
+1. NEVER use angle brackets ( < or > ) for ordered pairs or sets. ALWAYS use standard parentheses (a, b). Angle brackets will crash the UI.
+2. Use standard unicode symbols for math where possible (e.g., ∈, ⊆, ∪, ∩, ×, →, ℝ).
+3. If you must use LaTeX, wrap it strictly in double dollar signs (e.g., $$x \in A$$). Do not use single dollar signs or plain text approximations.
 
 <context>
 {context}

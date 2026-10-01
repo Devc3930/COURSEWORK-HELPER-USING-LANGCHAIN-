@@ -20,7 +20,7 @@ The system ingests a PDF, embeds it into a local vector database, and utilizes a
 ## ⚙️ Installation & Setup
 
 **1. Clone the repository and navigate to the project directory:**
-```bash
+    bash
     git clone [https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git](https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git)
     cd COURSEWORK-HELPER-USING-LANGCHAIN-
 

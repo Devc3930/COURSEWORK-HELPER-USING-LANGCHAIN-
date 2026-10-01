@@ -7,3 +7,7 @@ pypdf
 sentence-transformers
 python-dotenv
 streamlit
+fastapi
+uvicorn
+requests
+fonttools

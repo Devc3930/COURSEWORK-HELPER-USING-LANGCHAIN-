@@ -1,4 +1,4 @@
-# 📚 Coursework Interrogator
+# 📚 Coursework Helper
 
 An end-to-end Retrieval-Augmented Generation (RAG) AI application designed to help study texts specifically focused on Discrete Mathematics. 
 

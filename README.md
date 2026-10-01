@@ -21,26 +21,25 @@ The system ingests a PDF, embeds it into a local vector database, and utilizes a
 
 **1. Clone the repository and navigate to the project directory:**
 ```bash
-git clone [https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git](https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git)
-cd COURSEWORK-HELPER-USING-LANGCHAIN-
+    git clone [https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git](https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git)
+    cd COURSEWORK-HELPER-USING-LANGCHAIN-
 
 **2. Setting Up Virual Environment:**
-```bash
-# Windows
-python -m venv venv
-.\venv\Scripts\activate
+    bash
+        # Windows
+        python -m venv venv
+        .\venv\Scripts\activate
 
-# macOS/Linux
-python3 -m venv venv
-source venv/bin/activate
+        #macOS/Linux
+        python3 -m venv venv
+        source venv/bin/activate
 
 **3. Install Dependencies**
-```bash
-pip install -r requirements.txt
+bash
+    pip install -r requirements.txt
 
 **4. Configure Environment Variables:**
-Create a .env file in the root directory and add your Groq API key:   
-
+ Create a .env file in the root directory and add your Groq API key:   
 GROQ_API_KEY=gsk_your_actual_key_here
 
 **5.Running the Application**

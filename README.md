@@ -1,42 +1,58 @@
-# Coursework Interrogator (Local RAG Pipeline)
+# 📚 Coursework Interrogator
 
-A Retrieval-Augmented Generation (RAG) system built to ingest complex academic textbooks (PDFs) and accurately answer contextual questions. This project prevents AI hallucinations by forcing the LLM to ground its answers strictly in the provided syllabus material.
+An end-to-end Retrieval-Augmented Generation (RAG) AI application designed to help study texts specifically focused on Discrete Mathematics. 
 
-## Tech Stack
-* **Orchestration:** Python, LangChain (LCEL architecture)
-* **LLM:** Groq API (openai/gpt-oss-120b)
-* **Embeddings:** HuggingFace (`all-MiniLM-L6-v2`)
-* **Vector Database:** ChromaDB (Local)
-* **Document Processing:** PyPDFLoader, RecursiveCharacterTextSplitter
+The system ingests a PDF, embeds it into a local vector database, and utilizes a FastAPI backend to serve highly accurate, context-grounded answers. The frontend is built with Streamlit to natively render complex mathematical symbols and LaTeX notation.
 
-## How It Works
-1. **Ingestion:** Reads academic textbook PDFs and splits them into optimized, overlapping token chunks.
-2. **Embedding:** Runs texts through a local HuggingFace embedding model to generate dense vectors without API costs.
-3. **Retrieval & Generation:** Queries the local Chroma database for semantic matches and streams the context to Llama 3.1 via Groq for high-speed, grounded inference.
+## 🚀 Features
+* **Document Ingestion:** Parses and splits dense academic PDFs using `PyPDFLoader` and `RecursiveCharacterTextSplitter`.
+* **Local Vector Storage:** Uses HuggingFace embeddings (`all-MiniLM-L6-v2`) and ChromaDB for fast, local similarity search.
+* **Open-Source LLM:** Powered by Groq's high-speed inference engine using the `openai/gpt-oss-120b` open-weight model.
+* **Strict Mathematical Formatting:** Prompt-engineered to output clean LaTeX and avoid UI-breaking characters (like angle brackets for sets), ensuring discrete math relations are displayed perfectly.
+* **Decoupled Architecture:** A robust FastAPI backend communicating seamlessly with a Streamlit web interface via REST endpoints.
 
-## Local Setup
+## 🛠️ Tech Stack
+* **Core RAG:** Python, LangChain, Chroma, HuggingFace
+* **Backend:** FastAPI, Uvicorn, Pydantic
+* **Frontend:** Streamlit, Requests
+* **LLM Provider:** Groq API
 
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git](https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git)
-   cd COURSEWORK-HELPER-USING-LANGCHAIN-
+## ⚙️ Installation & Setup
 
-2. **Set up the virtual environment:**
-    ```bash
-    python -m venv venv
-    venv\Scripts\activate
+**1. Clone the repository and navigate to the project directory:**
+```bash
+git clone [https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git](https://github.com/Devc3930/COURSEWORK-HELPER-USING-LANGCHAIN-.git)
+cd COURSEWORK-HELPER-USING-LANGCHAIN-
 
-3. **Install dependencies:**
-    pip install langchain langchain-groq langchain-huggingface langchain-community chromadb pypdf sentence-transformers
-4. **Configure environment variables:**
-    Create a .env file in the root directory and add your free Groq API key:
-    GROQ_API_KEY=gsk_your_api_key_here
+**2. Setting Up Virual Environment:**
+```bash
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
 
-5. **Run the Application:**
-    Drop a PDF named chapter_9.pdf into the root folder, 
-    then execute:
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
 
-        Bash
-        python app.py
+**3. Install Dependencies**
+```bash
+pip install -r requirements.txt
 
+**4. Configure Environment Variables:**
+Create a .env file in the root directory and add your Groq API key:   
 
+GROQ_API_KEY=gsk_your_actual_key_here
+
+**5.Running the Application**
+To run the full stack, you need to boot both the backend and frontend servers in separate terminal windows. Ensure your virtual environment is active in both terminals.
+
+Terminal 1: Start the FastAPI Backend
+
+Bash
+    uvicorn api:app --reload
+Wait for the terminal to print Application startup complete.
+
+Terminal 2: Start the Streamlit Frontend
+
+Bash
+    streamlit run frontend.py

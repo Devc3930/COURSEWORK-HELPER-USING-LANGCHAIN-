@@ -11,6 +11,9 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain_groq import ChatGroq
+from langchain_core.runnables import RunnableLambda
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 
 # 1. Load the secret API key from your .env file
 load_dotenv()
@@ -32,7 +35,7 @@ class QueryRequest(BaseModel):
 
 # 5. Build the RAG Pipeline globally on startup
 print("Booting up backend and embedding textbook...")
-loader = PyPDFLoader("chapter_9.pdf")
+loader = PyPDFLoader("discrete.pdf")
 docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
@@ -46,10 +49,10 @@ llm = ChatGroq(model="openai/gpt-oss-120b")
 prompt = ChatPromptTemplate.from_template("""
 You are an academic tutor. Answer the student's question based strictly on the provided textbook context.
 
-CRITICAL INSTRUCTIONS FOR MATH NOTATION:
-1. NEVER use angle brackets ( < or > ) for ordered pairs or sets. ALWAYS use standard parentheses (a, b). Angle brackets will crash the UI.
-2. Use standard unicode symbols for math where possible (e.g., ∈, ⊆, ∪, ∩, ×, →, ℝ).
-3. If you must use LaTeX, wrap it strictly in double dollar signs (e.g., $$x \in A$$). Do not use single dollar signs or plain text approximations.
+CRITICAL MATH FORMATTING RULES:
+Do NOT use $, (), or [] for mathematical symbols. You must use XML tags:
+1. Wrap all inline math, sets, and variables inside <m> and </m>. Example: <m>x \in A</m>
+2. Wrap all standalone equations inside <eq> and </eq>. Example: <eq>A \cup B</eq>
 
 <context>
 {context}
@@ -61,16 +64,28 @@ Question: {input}
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
+def format_math_tags(text: str) -> str:
+    """Translates XML math tags into Streamlit-friendly LaTeX."""
+    text = text.replace("<m>", "$").replace("</m>", "$")
+    text = text.replace("<eq>", "\n$$\n").replace("</eq>", "\n$$\n")
+    return text
+
+math_cleaner = RunnableLambda(format_math_tags)
+
 rag_chain = (
     {"context": retriever | format_docs, "input": RunnablePassthrough()}
     | prompt
     | llm
     | StrOutputParser()
+    | math_cleaner
 )
 print("✅ Backend Ready!")
 
 # 6. Define the Web Endpoint
 @app.post("/ask")
 async def ask_question(request: QueryRequest):
-    response = rag_chain.invoke(request.question)
-    return {"answer": response}
+    try:
+        clean_answer = rag_chain.invoke(request.question)
+        return {"answer": clean_answer}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

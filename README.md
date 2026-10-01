@@ -35,23 +35,23 @@ The system ingests a PDF, embeds it into a local vector database, and utilizes a
         source venv/bin/activate
 
 **3. Install Dependencies**
-bash
-    pip install -r requirements.txt
+    bash
+        pip install -r requirements.txt
 
 **4. Configure Environment Variables:**
- Create a .env file in the root directory and add your Groq API key:   
-GROQ_API_KEY=gsk_your_actual_key_here
+    Create a .env file in the root directory and add your Groq API key:   
+    GROQ_API_KEY=gsk_your_actual_key_here
 
 **5.Running the Application**
-To run the full stack, you need to boot both the backend and frontend servers in separate terminal windows. Ensure your virtual environment is active in both terminals.
+    To run the full stack, you need to boot both the backend and frontend servers in separate terminal windows. Ensure your virtual environment is active in both terminals.
 
-Terminal 1: Start the FastAPI Backend
+    Terminal 1: Start the FastAPI Backend
 
-Bash
-    uvicorn api:app --reload
-Wait for the terminal to print Application startup complete.
+        Bash
+            uvicorn api:app --reload
+    Wait for the terminal to print Application startup complete.
 
-Terminal 2: Start the Streamlit Frontend
+    Terminal 2: Start the Streamlit Frontend
 
-Bash
-    streamlit run frontend.py
+        Bash
+            streamlit run frontend.py
